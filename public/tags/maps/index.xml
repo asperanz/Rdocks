@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Maps on A Hugo website</title>
+    <link>/tags/maps/</link>
+    <description>Recent content in Maps on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 14 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/maps/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Dead Dogs live concerts map since 2014</title>
+      <link>/2020/05/14/dead-dogs-live-concerts-map-since-2014/</link>
+      <pubDate>Thu, 14 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/05/14/dead-dogs-live-concerts-map-since-2014/</guid>
+      <description>library(here)library(tidyverse)library(funModeling)library(readxl)library(leaflet)library(leaflet.extras)# Get data # Using the .xlsx file locally with here() package# here::here()# dd_concerts &amp;lt;- read_excel(here(&amp;quot;data&amp;quot;,&amp;quot;Dead Dogs Live Concerts.xlsx&amp;quot;), sheet = &amp;quot;Sheet1&amp;quot;)# Or alternatively Using the .csv file stored on github in the Dead Dogs Analytics repositorydd_concerts &amp;lt;- as_tibble(read.csv(file=&amp;quot;https://raw.githubusercontent.com/asperanz/Dead-Dogs-Analytics/master/data/Dead%20Dogs%20Live%20Concerts.csv&amp;quot;, header=TRUE, sep=&amp;quot;,&amp;quot;, stringsAsFactors=FALSE))# Map of concertsleaflet(dd_concerts) %&amp;gt;% # addProviderTiles(&amp;quot;CartoDB.</description>
+    </item>
+    
+  </channel>
+</rss>

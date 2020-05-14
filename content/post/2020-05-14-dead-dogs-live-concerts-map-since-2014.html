@@ -1,0 +1,66 @@
+---
+title: Dead Dogs live concerts map since 2014
+author: Alessandro Speranza
+date: '2020-05-14'
+slug: dead-dogs-live-concerts-map-since-2014
+categories:
+  - Maps
+tags:
+  - maps
+  - leaflet
+---
+
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/jquery/jquery.min.js"></script>
+<link href="/rmarkdown-libs/leaflet/leaflet.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/leaflet/leaflet.js"></script>
+<link href="/rmarkdown-libs/leafletfix/leafletfix.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/Proj4Leaflet/proj4-compressed.js"></script>
+<script src="/rmarkdown-libs/Proj4Leaflet/proj4leaflet.js"></script>
+<link href="/rmarkdown-libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/leaflet-binding/leaflet.js"></script>
+<script src="/rmarkdown-libs/leaflet-providers/leaflet-providers_1.9.0.js"></script>
+<script src="/rmarkdown-libs/leaflet-providers-plugin/leaflet-providers-plugin.js"></script>
+<link href="/rmarkdown-libs/leaflet-markercluster/MarkerCluster.css" rel="stylesheet" />
+<link href="/rmarkdown-libs/leaflet-markercluster/MarkerCluster.Default.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/leaflet-markercluster/leaflet.markercluster.js"></script>
+<script src="/rmarkdown-libs/leaflet-markercluster/leaflet.markercluster.freezable.js"></script>
+<script src="/rmarkdown-libs/leaflet-markercluster/leaflet.markercluster.layersupport.js"></script>
+<script src="/rmarkdown-libs/lfx-heat/lfx-heat-prod.js"></script>
+<script src="/rmarkdown-libs/lfx-heat/lfx-heat-bindings.js"></script>
+
+
+<pre class="r"><code>library(here)
+library(tidyverse)
+library(funModeling)
+library(readxl)
+library(leaflet)
+library(leaflet.extras)</code></pre>
+<pre class="r"><code># Get data 
+# Using the .xlsx file locally with here() package
+# here::here()
+# dd_concerts &lt;- read_excel(here(&quot;data&quot;,&quot;Dead Dogs Live Concerts.xlsx&quot;), sheet = &quot;Sheet1&quot;)
+
+# Or alternatively Using the .csv file stored on github in the Dead Dogs Analytics repository
+dd_concerts &lt;- as_tibble(read.csv(file=&quot;https://raw.githubusercontent.com/asperanz/Dead-Dogs-Analytics/master/data/Dead%20Dogs%20Live%20Concerts.csv&quot;, header=TRUE, sep=&quot;,&quot;, stringsAsFactors=FALSE))</code></pre>
+<pre class="r"><code># Map of concerts
+
+leaflet(dd_concerts) %&gt;% 
+  # addProviderTiles(&quot;CartoDB.Positron&quot;) %&gt;%
+  #addProviderTiles(&quot;CartoDB.DarkMatter&quot;) %&gt;%
+  addProviderTiles(providers$Stamen.Toner, group = &quot;Black and white&quot;) %&gt;% 
+  addMarkers(~longitude, 
+             ~latitude,
+             popup = paste(&quot;&lt;b&gt;Concert:&lt;/b&gt;&quot;, dd_concerts$concert, &quot;&lt;br&gt;&quot;,
+                           &quot;&lt;b&gt;Location:&lt;/b&gt;&quot;, dd_concerts$location, &quot;&lt;br&gt;&quot;,
+                           &quot;&lt;b&gt;Date:&lt;/b&gt;&quot;, dd_concerts$date,
+                           dd_concerts$playlist),
+             clusterOptions = markerClusterOptions()) %&gt;% 
+  addHeatmap(
+    lng = ~longitude, 
+    lat = ~latitude,
+    radius = 17,
+    blur = 25,
+    cellSize = 25)</code></pre>
+<div id="htmlwidget-1" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Stamen.Toner",null,"Black and white",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addMarkers","args":[[45.419184,45.419184,45.326125,45.370282,45.432414,45.468432,45.432414,45.432414,45.432414,45.370282,45.468737,45.432414,45.500714],[9.254254,9.254254,9.258815,9.323205,9.378105,9.055407,9.378105,9.378105,9.378105,9.323205,9.124025,9.378105,9.142845],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["<b>Concert:<\/b> Christmas Party 2014 <br> <b>Location:<\/b> Stoker - Restaurant & Cocktail Lounge <br> <b>Date:<\/b> 21/12/2014 ","<b>Concert:<\/b> Christmas Party 2015 <br> <b>Location:<\/b> Stoker - Restaurant & Cocktail Lounge <br> <b>Date:<\/b> 20/12/2015 ","<b>Concert:<\/b> 50's Party <br> <b>Location:<\/b> Cascina Bruciata - contea Del Sole <br> <b>Date:<\/b> 11/06/2016 <iframe width=\"300\" height=\"169\" src=\"https://www.youtube.com/embed/playlist?list=PLhIw1_0YGPER3H3lpApMLkc2d676B-lpD\"><\/iframe>","<b>Concert:<\/b> Camilla's Degree Party <br> <b>Location:<\/b> Rocca Brivio <br> <b>Date:<\/b> 23/09/2016 <iframe width=\"300\" height=\"169\" src=\"https://www.youtube.com/embed/playlist?list=PLhIw1_0YGPEQsx48wV5tLpmYbAA5BfW53\"><\/iframe>","<b>Concert:<\/b> Christmas Party 2016 <br> <b>Location:<\/b> Dundee Pub <br> <b>Date:<\/b> 18/12/2016 <iframe width=\"300\" height=\"169\" src=\"https://www.youtube.com/embed/playlist?list=PLhIw1_0YGPEQOfk9pf6mdFPP_tzQwQIU2\"><\/iframe>","<b>Concert:<\/b> Country Event 2017 <br> <b>Location:<\/b> Il Nuovo Boscaccio <br> <b>Date:<\/b> 16/06/2017 <iframe width=\"300\" height=\"169\" src=\"https://www.youtube.com/embed/playlist?list=PLhIw1_0YGPERgIZrg9wvCdefjvdmmbfiH\"><\/iframe>","<b>Concert:<\/b> Christmas Party 2017 <br> <b>Location:<\/b> Dundee Pub <br> <b>Date:<\/b> 17/12/2017 <iframe width=\"300\" height=\"169\" src=\"https://www.youtube.com/embed/playlist?list=PLhIw1_0YGPEQLnaY_Nknm4RA8LLkbFkbN\"><\/iframe>","<b>Concert:<\/b> Halloween Party 2018 <br> <b>Location:<\/b> Dundee Pub <br> <b>Date:<\/b> 31/10/2018 <iframe width=\"300\" height=\"169\" src=\"https://www.youtube.com/embed/playlist?list=PLhIw1_0YGPEQyp_iflLtD4TAXAm8_pZVk\"><\/iframe>","<b>Concert:<\/b> Martina's 18th Birthday Party <br> <b>Location:<\/b> Dundee Pub <br> <b>Date:<\/b> 02/12/2018 <iframe width=\"300\" height=\"169\" src=\"https://www.youtube.com/embed/playlist?list=PLhIw1_0YGPESAFz3ZRQ4gZTtYIvehRb3M\"><\/iframe>","<b>Concert:<\/b> Cristina's 50th Birthday Party <br> <b>Location:<\/b> Rocca Brivio <br> <b>Date:<\/b> 28/09/2019 <iframe width=\"300\" height=\"169\" src=\"https://www.youtube.com/embed/playlist?list=PLhIw1_0YGPERkly8jenagw3o3U4H6CtxI\"><\/iframe>","<b>Concert:<\/b> Palco Aperto Event 2019 <br> <b>Location:<\/b> Mare Culturale Urbano <br> <b>Date:<\/b> 02/11/2019 <iframe width=\"300\" height=\"169\" src=\"https://www.youtube.com/embed/playlist?list=PLhIw1_0YGPEQxp3qFIbmKmdEX7RGZU42B\"><\/iframe>","<b>Concert:<\/b> Christmas Party 2019 <br> <b>Location:<\/b> Dundee Pub <br> <b>Date:<\/b> 21/12/2019 <iframe width=\"300\" height=\"169\" src=\"https://www.youtube.com/embed/playlist?list=PLhIw1_0YGPETya3CXmcudNLE0edFQ3307\"><\/iframe>","<b>Concert:<\/b> Laura's Birthday Party 2020 <br> <b>Location:<\/b> Laura's House - Via Villapizzone, 26 <br> <b>Date:<\/b> 22/02/2020 "],null,{"showCoverageOnHover":true,"zoomToBoundsOnClick":true,"spiderfyOnMaxZoom":true,"removeOutsideVisibleBounds":true,"spiderLegPolylineOptions":{"weight":1.5,"color":"#222","opacity":0.5},"freezeAtZoom":false},null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addHeatmap","args":[[[45.419184,9.254254],[45.419184,9.254254],[45.326125,9.258815],[45.370282,9.323205],[45.432414,9.378105],[45.468432,9.055407],[45.432414,9.378105],[45.432414,9.378105],[45.432414,9.378105],[45.370282,9.323205],[45.468737,9.124025],[45.432414,9.378105],[45.500714,9.142845]],null,null,{"minOpacity":0.05,"max":1,"radius":17,"blur":25,"cellSize":25}]}],"limits":{"lat":[45.326125,45.500714],"lng":[9.055407,9.378105]}},"evals":[],"jsHooks":[]}</script>
